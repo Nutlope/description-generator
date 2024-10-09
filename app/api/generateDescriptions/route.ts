@@ -9,6 +9,8 @@ export async function POST(req: Request) {
     .object({
       imageUrl: z.string(),
       languages: z.array(z.string()),
+      model: z.string(),
+      length: z.string(),
     })
     .safeParse(json);
 
@@ -16,10 +18,10 @@ export async function POST(req: Request) {
     return new Response(result.error.message, { status: 422 });
   }
 
-  const { languages, imageUrl } = result.data;
+  const { languages, imageUrl, model, length } = result.data;
 
   const res = await together.chat.completions.create({
-    model: "meta-llama/Llama-3.2-11B-Vision-Instruct-Turbo",
+    model,
     temperature: 0.2,
     stream: false,
     messages: [
@@ -29,7 +31,7 @@ export async function POST(req: Request) {
         content: [
           {
             type: "text",
-            text: `Given this product image, return a short product description in each of these languages. ${languages
+            text: `Given this product image, return a ${length} product description in each of these languages. ${languages
               .map((language) => `"${language}"`)
               .join(", ")}
 
