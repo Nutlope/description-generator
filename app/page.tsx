@@ -5,6 +5,7 @@ import Spinner from "@/components/spinner";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
+import { Skeleton } from "@/components/ui/skeleton";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Upload, X } from "lucide-react";
 import { useS3Upload } from "next-s3-upload";
@@ -45,7 +46,7 @@ export default function Page() {
   const [descriptions, setDescriptions] = useState<
     { language: string; description: string }[]
   >([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
   const [model, setModel] = useState(models[0].value);
   const [length, setLength] = useState(lengths[0].value);
 
@@ -62,7 +63,7 @@ export default function Page() {
   const handleSubmit = async () => {
     if (!image || selectedLanguages.length === 0) return;
 
-    setIsLoading(true);
+    setStatus("loading");
 
     const response = await fetch("/api/generateDescriptions", {
       method: "POST",
@@ -78,7 +79,7 @@ export default function Page() {
     console.log(descriptions);
 
     setDescriptions(descriptions);
-    setIsLoading(false);
+    setStatus("success");
   };
 
   return (
@@ -210,18 +211,20 @@ export default function Page() {
           <div className="mt-10 text-right">
             <Button
               onClick={handleSubmit}
-              disabled={!image || selectedLanguages.length === 0 || isLoading}
+              disabled={
+                !image || selectedLanguages.length === 0 || status === "loading"
+              }
               className="relative"
             >
               <span
                 className={`${
-                  isLoading ? "opacity-0" : "opacity-100"
+                  status === "loading" ? "opacity-0" : "opacity-100"
                 } whitespace-pre-wrap text-center font-semibold leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10`}
               >
                 Generate descriptions
               </span>
 
-              {isLoading && (
+              {status === "loading" && (
                 <span className="pointer-events-none absolute inset-0 flex items-center justify-center">
                   <Spinner className="size-4" />
                 </span>
@@ -231,7 +234,7 @@ export default function Page() {
         </div>
       </Card>
 
-      {descriptions.length === 0 ? (
+      {status === "idle" ? (
         <div className="flex flex-col items-center justify-center rounded-xl bg-gray-50">
           <p className="text-center text-xl text-gray-500">
             See your generated descriptions here
@@ -239,19 +242,38 @@ export default function Page() {
         </div>
       ) : (
         <Card className="mx-auto mt-6 w-full max-w-xl p-6 sm:mt-0">
-          {Object.keys(descriptions).length > 0 && (
-            <div className="space-y-4">
-              <h3 className="text-xl font-semibold">Generated Descriptions</h3>
-              {descriptions.map(({ language, description }) => (
-                <div key={language}>
-                  <h4 className="font-medium">
-                    {languages.find((l) => l.code === language)?.name}
-                  </h4>
-                  <p className="mt-1 text-sm text-gray-600">{description}</p>
-                </div>
-              ))}
-            </div>
-          )}
+          <div className="space-y-4">
+            <h3 className="text-xl font-semibold">Generated Descriptions</h3>
+            {status === "loading" ? (
+              <div className="space-y-8">
+                {selectedLanguages.map((language) => (
+                  <div className="flex flex-col space-y-3" key={language}>
+                    <Skeleton className="h-8 w-[250px]" />
+                    <Skeleton
+                      className={`${
+                        length === "short"
+                          ? "h-12"
+                          : length === "medium"
+                            ? "h-20"
+                            : "h-32"
+                      }`}
+                    />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <>
+                {descriptions.map(({ language, description }) => (
+                  <div key={language}>
+                    <h4 className="font-medium">
+                      {languages.find((l) => l.code === language)?.name}
+                    </h4>
+                    <p className="mt-1 text-sm text-gray-600">{description}</p>
+                  </div>
+                ))}
+              </>
+            )}
+          </div>
         </Card>
       )}
     </div>
