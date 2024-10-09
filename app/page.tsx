@@ -4,17 +4,10 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Settings, Upload, X } from "lucide-react";
-import { useState } from "react";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { useS3Upload } from "next-s3-upload";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { Upload, X } from "lucide-react";
+import { useS3Upload } from "next-s3-upload";
+import { useState } from "react";
 
 const languages = [
   { code: "en", name: "English" },
@@ -28,6 +21,17 @@ const languages = [
   { code: "pt", name: "Portuguese" },
 ];
 
+const models = [
+  {
+    value: "meta-llama/Llama-3.2-11B-Vision-Instruct-Turbo",
+    label: "Llama 3.2 11B",
+  },
+  {
+    value: "meta-llama/Llama-3.2-90B-Vision-Instruct-Turbo",
+    label: "Llama 3.2 90B",
+  },
+];
+
 export default function Page() {
   const [image, setImage] = useState<string | null>(null);
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
@@ -35,6 +39,8 @@ export default function Page() {
     { language: string; description: string }[]
   >([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [model, setModel] = useState(models[0].value);
+
   const { uploadToS3 } = useS3Upload();
 
   const handleImageUpload = async (
@@ -46,15 +52,6 @@ export default function Page() {
     console.log("Successfully uploaded to S3!", url);
     setImage(url);
   };
-
-  const handleLanguageSelect = (lang: string) => {
-    if (selectedLanguages.includes(lang)) {
-      setSelectedLanguages(selectedLanguages.filter((l) => l !== lang));
-    } else if (selectedLanguages.length < 3) {
-      setSelectedLanguages([...selectedLanguages, lang]);
-    }
-  };
-
   const handleSubmit = async () => {
     if (!image || selectedLanguages.length === 0) return;
 
@@ -94,7 +91,7 @@ export default function Page() {
                 className="max-h-64 rounded"
               />
               <Button
-                variant="destructive"
+                variant="default"
                 size="icon"
                 className="absolute top-0 right-0"
                 onClick={() => setImage(null)}
@@ -140,9 +137,36 @@ export default function Page() {
                   selectedLanguages.length === 3 &&
                   !selectedLanguages.includes(lang.code)
                 }
-                className="text-xs rounded-2xl px-3 font-medium shadow-none py-1 data-[state=on]:bg-black data-[state=on]:text-white"
+                className="text-xs rounded-full px-3 font-medium shadow-none py-1 data-[state=on]:bg-black data-[state=on]:text-white"
               >
                 {lang.name}
+              </ToggleGroupItem>
+            ))}
+          </ToggleGroup>
+        </div>
+        <hr className="mt-6" />
+        <div className="grid grid-cols-2 mt-6">
+          <div>
+            <p className="font-bold text-sm text-gray-900">Model</p>
+            <p className="text-sm text-gray-500 mt-2">
+              Select the Llama 3.2 vision model you want to use.
+            </p>
+          </div>
+
+          <ToggleGroup
+            type="single"
+            className="flex flex-wrap justify-start gap-2 mx-auto "
+            onValueChange={setModel}
+            value={model}
+          >
+            {models.map((model) => (
+              <ToggleGroupItem
+                variant="outline"
+                key={model.value}
+                value={model.value}
+                className="text-xs rounded-full px-3 font-medium shadow-none py-1 data-[state=on]:bg-black data-[state=on]:text-white"
+              >
+                {model.label}
               </ToggleGroupItem>
             ))}
           </ToggleGroup>
