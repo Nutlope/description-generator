@@ -19,7 +19,7 @@ export async function POST(req: Request) {
   const { languages, imageUrl } = result.data;
 
   const res = await together.chat.completions.create({
-    model: "meta-llama/Llama-3.2-90B-Vision-Instruct-Turbo",
+    model: "meta-llama/Llama-3.2-11B-Vision-Instruct-Turbo",
     temperature: 0.2,
     stream: false,
     messages: [

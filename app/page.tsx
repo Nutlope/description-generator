@@ -14,6 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useS3Upload } from "next-s3-upload";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 const languages = [
   { code: "en", name: "English" },
@@ -24,6 +25,7 @@ const languages = [
   { code: "ja", name: "Japanese" },
   { code: "ko", name: "Korean" },
   { code: "zh", name: "Chinese" },
+  { code: "pt", name: "Portuguese" },
 ];
 
 export default function Page() {
@@ -116,38 +118,37 @@ export default function Page() {
             </Label>
           )}
         </div>
-        <div className="text-left mt-10">
-          <div className="mt-2 flex flex-wrap gap-2">
-            {selectedLanguages.map((lang) => (
-              <span
-                key={lang}
-                className="bg-primary text-primary-foreground px-2 py-1 rounded text-sm"
-              >
-                {languages.find((l) => l.code === lang)?.name}
-              </span>
-            ))}
+        <div className="grid grid-cols-2">
+          <div>
+            <p className="font-bold text-sm text-gray-900">Languages</p>
+            <p className="text-sm text-gray-500 mt-2">
+              Choose up to 3 languages for the product descriptions.
+            </p>
           </div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button className="flex justify-between hover:text-blue-500 w-1/2 mt-4">
-                <span>Select Languages:</span>
-                <Settings />
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56">
-              {languages.map((lang) => (
-                <DropdownMenuCheckboxItem
-                  key={lang.code}
-                  onSelect={(e) => e.preventDefault()}
-                  checked={selectedLanguages.includes(lang.code)}
-                  onCheckedChange={() => handleLanguageSelect(lang.code)}
-                >
-                  {lang.name}
-                </DropdownMenuCheckboxItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+
+          <ToggleGroup
+            type="multiple"
+            className="flex flex-wrap justify-start gap-2 mx-auto "
+            onValueChange={setSelectedLanguages}
+          >
+            {languages.map((lang) => (
+              <ToggleGroupItem
+                variant="outline"
+                key={lang.code}
+                value={lang.code}
+                disabled={
+                  selectedLanguages.length === 3 &&
+                  !selectedLanguages.includes(lang.code)
+                }
+                className="text-xs rounded-2xl px-3 font-medium shadow-none py-1 data-[state=on]:bg-black data-[state=on]:text-white"
+              >
+                {lang.name}
+              </ToggleGroupItem>
+            ))}
+          </ToggleGroup>
         </div>
+        <hr className="mt-6" />
+
         <div className="text-right mt-20">
           <Button
             onClick={handleSubmit}
