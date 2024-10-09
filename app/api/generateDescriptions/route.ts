@@ -41,7 +41,7 @@ export async function POST(req: Request) {
           content: [
             {
               type: "text",
-              text: `Given this product image, return JSON of a ${length} product description in each of these languages. ${languages
+              text: `Given this product image, return JSON of a Amazon-like ${length} sales product description in each of these languages. ${languages
                 .map((language) => `"${language}"`)
                 .join(", ")}
 
