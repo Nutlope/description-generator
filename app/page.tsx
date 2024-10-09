@@ -93,13 +93,15 @@ export default function Page() {
           languages.
         </p>
         <div>
-          <div className="mx-auto my-4 flex aspect-[4] flex-col items-center justify-center rounded-lg border-2 border-dashed p-4 transition-colors hover:border-primary">
+          <div
+            className={`${image ? "border-transparent" : "transition-colors hover:border-primary"} my-4 flex aspect-[3] flex-col items-center justify-center rounded-lg border-2 border-dashed`}
+          >
             {image ? (
-              <div className="relative">
+              <div className="relative flex h-full max-h-full w-full items-center justify-center">
                 <img
                   src={image}
                   alt="Uploaded product"
-                  className="max-h-64 rounded"
+                  className="h-full rounded"
                 />
                 <Button
                   variant="default"
@@ -111,7 +113,10 @@ export default function Page() {
                 </Button>
               </div>
             ) : (
-              <Label htmlFor="image-upload" className="cursor-pointer">
+              <Label
+                htmlFor="image-upload"
+                className="flex w-full grow cursor-pointer items-center justify-center"
+              >
                 <div className="flex flex-col items-center">
                   <Upload className="mb-2 h-8 w-8" />
                   <span>Upload product image</span>
@@ -125,6 +130,18 @@ export default function Page() {
                 />
               </Label>
             )}
+          </div>
+          <div className={`${image ? "invisible" : ""} text-right`}>
+            <button
+              onClick={() =>
+                setImage(
+                  "https://napkinsdev.s3.us-east-1.amazonaws.com/next-s3-uploads/4b0c4b21-2654-4044-9d7a-67ee9a732aa5/table.webp",
+                )
+              }
+              className="text-xs font-semibold text-blue-400 hover:text-blue-500"
+            >
+              Use a sample image
+            </button>
           </div>
 
           <div className="divide-y">
