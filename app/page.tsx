@@ -83,7 +83,7 @@ export default function Page() {
   };
 
   return (
-    <div className="mx-auto my-12 grid max-w-7xl grid-cols-2">
+    <div className="mx-auto my-12 grid max-w-7xl grid-cols-1 gap-8 px-4 lg:grid-cols-2">
       <Card className="mx-auto w-full max-w-xl p-6">
         <h2 className="mb-1 text-center text-2xl font-bold">
           Product Description Generator
@@ -252,13 +252,13 @@ export default function Page() {
       </Card>
 
       {status === "idle" ? (
-        <div className="flex flex-col items-center justify-center rounded-xl bg-gray-50">
+        <div className="flex h-64 flex-col items-center justify-center rounded-xl bg-gray-50 lg:h-auto">
           <p className="text-center text-xl text-gray-500">
             See your generated descriptions here
           </p>
         </div>
       ) : (
-        <Card className="mx-auto mt-6 w-full max-w-xl p-6 sm:mt-0">
+        <Card className="mx-auto w-full max-w-xl p-6">
           <div className="space-y-4">
             <h3 className="text-xl font-semibold">Generated Descriptions</h3>
             {status === "loading" ? (
