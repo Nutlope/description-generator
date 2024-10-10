@@ -57,7 +57,7 @@ export default function RootLayout({
             <p className="hidden whitespace-nowrap md:block">
               100% free and{" "}
               <a
-                href="https://github.com/Nutlope/blinkshot"
+                href="https://github.com/Nutlope/description-generator"
                 target="_blank"
                 className="underline underline-offset-4 transition hover:text-blue-500"
               >
