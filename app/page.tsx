@@ -135,7 +135,7 @@ export default function Page() {
             <button
               onClick={() =>
                 setImage(
-                  "https://napkinsdev.s3.us-east-1.amazonaws.com/next-s3-uploads/4b0c4b21-2654-4044-9d7a-67ee9a732aa5/table.webp",
+                  "https://napkinsdev.s3.us-east-1.amazonaws.com/next-s3-uploads/91061dca-cebc-4215-ab2c-8bde6cb46cac/trader-wafer.JPG",
                 )
               }
               className="text-xs font-semibold text-blue-400 hover:text-blue-500"
