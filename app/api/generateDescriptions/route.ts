@@ -23,6 +23,7 @@ export async function POST(req: Request) {
 
   let descriptions;
   let rawResponse;
+
   try {
     const res = await together.chat.completions.create({
       model,
