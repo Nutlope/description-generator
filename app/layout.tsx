@@ -37,7 +37,7 @@ export default function RootLayout({
           <p>
             Powered by{" "}
             <a
-              href="https://www.dub.sh/together-ai"
+              href="https://togetherai.link"
               target="_blank"
               className="underline underline-offset-4 transition hover:text-blue-500"
             >
@@ -45,7 +45,7 @@ export default function RootLayout({
             </a>{" "}
             &{" "}
             <a
-              href="https://www.dub.sh/together-ai"
+              href="https://togetherai.link"
               target="_blank"
               className="underline underline-offset-4 transition hover:text-blue-500"
             >
