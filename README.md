@@ -2,12 +2,12 @@
 
 ![Product Description Generator Demo](/assets/Product%20Description%20Generator.gif)
 
-This is an ecommerce demo that allows you to upload a product image and get detailed descriptions for it in different languages. Powered by [Together AI](https://togetherai.link) and [Llama 3.2 Vision](https://togetherai.link/llama3.2vision/?utm_source=example-app&utm_medium=pdg&utm_campaign=product-description-generator).
+This is an ecommerce demo that allows you to upload a product image and get detailed descriptions for it in different languages. Powered by [Together AI](https://togetherai.link/?utm_source=description-generator&utm_medium=referral&utm_campaign=example-app) and [Llama 3.2 Vision](https://togetherai.link/llama3.2vision/?utm_source=example-app&utm_medium=pdg&utm_campaign=product-description-generator).
 
 ## Tech stack
 
 - [Llama 3.2 Vision](https://togetherai.link/llama3.2vision/?utm_source=example-app&utm_medium=pdg&utm_campaign=product-description-generator) from Meta for the Vision model
-- [Together AI](https://togetherai.link) for LLM inference
+- [Together AI](https://togetherai.link/?utm_source=description-generator&utm_medium=referral&utm_campaign=example-app) for LLM inference
 - [S3](https://aws.amazon.com/s3/) for image storage
 - Next.js app router with Tailwind
 - Plausible for website analytics
