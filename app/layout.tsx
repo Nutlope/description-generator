@@ -37,7 +37,7 @@ export default function RootLayout({
           <p>
             Powered by{" "}
             <a
-              href="https://togetherai.link"
+              href="https://togetherai.link/?utm_source=description-generator&utm_medium=referral&utm_campaign=example-app"
               target="_blank"
               className="underline underline-offset-4 transition hover:text-blue-500"
             >
@@ -45,7 +45,7 @@ export default function RootLayout({
             </a>{" "}
             &{" "}
             <a
-              href="https://togetherai.link"
+              href="https://togetherai.link/?utm_source=description-generator&utm_medium=referral&utm_campaign=example-app"
               target="_blank"
               className="underline underline-offset-4 transition hover:text-blue-500"
             >
